@@ -9,32 +9,19 @@ window.addEventListener('load', () => {
     }, 3000);
 });
 
-// Form Submission
-document.getElementById('contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
+// Contact form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
-    formStatus.innerHTML = '<p style="color: #00ffe5;">Sending message...</p>';
     
-    const formData = new FormData(e.target);
-    
-    fetch('send_email.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            formStatus.innerHTML = '<p style="color: #00ffe5;">' + data.message + '</p>';
-            e.target.reset();
-        } else {
-            formStatus.innerHTML = '<p style="color: #ff3366;">' + data.message + '</p>';
-        }
-    })
-    .catch(error => {
-        formStatus.innerHTML = '<p style="color: #ff3366;">There was an error sending your message. Please try again later.</p>';
-        console.error('Error:', error);
-    });
+    if (contactForm) {
+        // FormSubmit handles the form submission directly
+        // This code provides feedback before the form submits
+        contactForm.addEventListener('submit', function() {
+            formStatus.innerHTML = '<p class="sending">Sending message...</p>';
+            // Form will be submitted normally to FormSubmit
+        });
+    }
 });
 
 // Scroll Animation

@@ -124,11 +124,14 @@
                 <h2>Get in Touch</h2>
                 <p>Have a project in mind? Let's discuss how we can help you achieve your goals.</p>
                 <div class="contact-content">
-                    <form id="contactForm" class="glass-card" action="send_email.php" method="POST">
+                    <form id="contactForm" class="glass-card" action="https://formsubmit.co/arquesedge@gmail.com" method="POST">
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="text" name="subject" placeholder="Subject">
                         <textarea name="message" placeholder="Your Message" required></textarea>
+                        <input type="hidden" name="_next" value="https://arquesedge.com/thank-you">
+                        <input type="hidden" name="_subject" value="New Contact Form Submission">
+                        <input type="hidden" name="_captcha" value="false">
                         <button type="submit" class="btn btn-primary">Send Message</button>
                         <div id="formStatus"></div>
                     </form>
@@ -163,6 +166,7 @@
         </footer>
     </div>
 
+    <!-- No longer need EmailJS -->
     <script src="js/script.js"></script>
 </body>
 </html>
