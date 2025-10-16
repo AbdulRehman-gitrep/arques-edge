@@ -124,12 +124,13 @@
                 <h2>Get in Touch</h2>
                 <p>Have a project in mind? Let's discuss how we can help you achieve your goals.</p>
                 <div class="contact-content">
-                    <form id="contactForm" class="glass-card">
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email" required>
-                        <input type="text" placeholder="Subject">
-                        <textarea placeholder="Your Message" required></textarea>
+                    <form id="contactForm" class="glass-card" action="send_email.php" method="POST">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                        <input type="text" name="subject" placeholder="Subject">
+                        <textarea name="message" placeholder="Your Message" required></textarea>
                         <button type="submit" class="btn btn-primary">Send Message</button>
+                        <div id="formStatus"></div>
                     </form>
                     <div class="contact-info glass-card">
                         <div class="contact-item">

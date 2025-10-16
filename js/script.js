@@ -12,8 +12,29 @@ window.addEventListener('load', () => {
 // Form Submission
 document.getElementById('contactForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
-    e.target.reset();
+    
+    const formStatus = document.getElementById('formStatus');
+    formStatus.innerHTML = '<p style="color: #00ffe5;">Sending message...</p>';
+    
+    const formData = new FormData(e.target);
+    
+    fetch('send_email.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            formStatus.innerHTML = '<p style="color: #00ffe5;">' + data.message + '</p>';
+            e.target.reset();
+        } else {
+            formStatus.innerHTML = '<p style="color: #ff3366;">' + data.message + '</p>';
+        }
+    })
+    .catch(error => {
+        formStatus.innerHTML = '<p style="color: #ff3366;">There was an error sending your message. Please try again later.</p>';
+        console.error('Error:', error);
+    });
 });
 
 // Scroll Animation
