@@ -1,81 +1,72 @@
-// Loading Animation
+// Loader functionality
 window.addEventListener('load', () => {
     setTimeout(() => {
-        document.getElementById('loader').style.opacity = '0';
-        setTimeout(() => {
-            document.getElementById('loader').style.display = 'none';
-            document.querySelector('.main-content').classList.add('show');
-        }, 500);
-    }, 3000);
+        document.getElementById('loader').style.display = 'none';
+        document.querySelector('.main-content').style.display = 'block';
+    }, 2000);
 });
 
-// Contact form submission
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = contactForm.elements.name.value;
-            const email = contactForm.elements.email.value;
-            const subject = contactForm.elements.subject.value || 'New Contact Form Submission';
-            const message = contactForm.elements.message.value;
-            
-            // Validate form
-            if (!name || !email || !message) {
-                formStatus.innerHTML = '<p class="error">Please fill in all required fields.</p>';
-                return;
-            }
-            
-            // Validate email format
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                formStatus.innerHTML = '<p class="error">Please enter a valid email address.</p>';
-                return;
-            }
-            
-            formStatus.innerHTML = '<p class="sending">Preparing your message...</p>';
-            
-            // Simulate sending process (in a real implementation, this would use a service)
-            setTimeout(() => {
-                // Create mailto link that opens in user's email client
-                const mailtoLink = `mailto:arquesedge@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-                
-                // Open email client
-                window.location.href = mailtoLink;
-                
-                // Show success message
-                formStatus.innerHTML = '<p class="success">Your email client has opened with your message ready to send. Please click send in your email program.</p>';
-                
-                // Reset form
-                contactForm.reset();
-                
-            }, 1500);
-        });
-    }
-});
-
-// Scroll Animation
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
     });
-}, observerOptions);
-
-document.querySelectorAll('.glass-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(50px)';
-    card.style.transition = 'all 0.6s ease-out';
-    observer.observe(card);
 });
+
+// Contact form submission with Formspree
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formStatus = document.getElementById('formStatus');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        
+        try {
+            // Formspree form endpoint
+            const response = await fetch('https://formspree.io/f/mldpaqel', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                if (formStatus) {
+                    formStatus.textContent = 'Message sent successfully! We\'ll get back to you soon.';
+                    formStatus.style.color = '#4ade80';
+                    formStatus.style.marginTop = '1rem';
+                }
+                contactForm.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            if (formStatus) {
+                formStatus.textContent = 'Oops! There was a problem sending your message. Please try again or email us directly at arquesedge@gmail.com';
+                formStatus.style.color = '#ef4444';
+                formStatus.style.marginTop = '1rem';
+            }
+        } finally {
+            // Re-enable button
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        }
+    });
+}
