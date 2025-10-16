@@ -640,3 +640,169 @@ footer .footer-tagline {
 html {
     scroll-behavior: smooth;
 }
+/* Services Page Enhancements */
+#services-intro {
+    padding: 6rem 0 2rem;
+    text-align: center;
+}
+
+.services-tagline {
+    font-size: 1.3rem;
+    color: #00d4ff;
+    margin-top: 1rem;
+    font-weight: 300;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3rem;
+}
+
+/* Service Card Enhancements */
+.service-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.service-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.service-card {
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: visible;
+}
+
+.service-card h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #00d4ff;
+}
+
+.short-desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.detailed-desc {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Pricing Badge */
+.pricing-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Section Spacing */
+#ai-services,
+#traditional-services {
+    padding: 4rem 0;
+}
+
+#ai-services h2,
+#traditional-services h2 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* CTA Section */
+#services-cta {
+    padding: 4rem 0;
+}
+
+.cta-card {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.cta-card h2 {
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+}
+
+.cta-card p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .service-icon {
+        font-size: 2.5rem;
+    }
+    
+    .service-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .cta-card {
+        padding: 3rem 1.5rem;
+    }
+    
+    .cta-card h2 {
+        font-size: 1.8rem;
+    }
+}
