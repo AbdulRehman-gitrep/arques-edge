@@ -15,11 +15,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const formStatus = document.getElementById('formStatus');
     
     if (contactForm) {
-        // FormSubmit handles the form submission directly
-        // This code provides feedback before the form submits
-        contactForm.addEventListener('submit', function() {
-            formStatus.innerHTML = '<p class="sending">Sending message...</p>';
-            // Form will be submitted normally to FormSubmit
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = contactForm.elements.name.value;
+            const email = contactForm.elements.email.value;
+            const subject = contactForm.elements.subject.value || 'New Contact Form Submission';
+            const message = contactForm.elements.message.value;
+            
+            // Validate form
+            if (!name || !email || !message) {
+                formStatus.innerHTML = '<p class="error">Please fill in all required fields.</p>';
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formStatus.innerHTML = '<p class="error">Please enter a valid email address.</p>';
+                return;
+            }
+            
+            formStatus.innerHTML = '<p class="sending">Preparing your message...</p>';
+            
+            // Simulate sending process (in a real implementation, this would use a service)
+            setTimeout(() => {
+                // Create mailto link that opens in user's email client
+                const mailtoLink = `mailto:arquesedge@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+                
+                // Open email client
+                window.location.href = mailtoLink;
+                
+                // Show success message
+                formStatus.innerHTML = '<p class="success">Your email client has opened with your message ready to send. Please click send in your email program.</p>';
+                
+                // Reset form
+                contactForm.reset();
+                
+            }, 1500);
         });
     }
 });
